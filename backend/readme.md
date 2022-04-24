@@ -7,6 +7,10 @@ npm install
 ```
 npm run server
 ```
+3. To run test
+```
+npm run test
+```
 
 ## Endpoints
 | Path     | Method | Description                                                                                                                                                 |

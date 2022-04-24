@@ -19,10 +19,12 @@ app.use(initIl8n());
 app.use(passport.initialize());
 app.use('/', require('./routes/user'));
 
-app.listen(port, (error) => {
+const server = app.listen(port, (error) => {
     if (error) {
         console.error('Error while starting server: ', error)
     } else {
         console.log(`Server started on PORT ${port}`)
     }
 });
+
+module.exports = server;
