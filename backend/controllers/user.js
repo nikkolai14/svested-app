@@ -72,7 +72,12 @@ const processData = async (req, res) => {
 }
 
 const getData = async (req, res) => {
-    const datas = await Data.findAll({where: {userId: req.userId}});
+    const limit = 10;
+    const datas = await Data.findAll({
+        limit,
+        offset: req.query.page ? (parseInt(req.query.page) - 1) * limit : 0,
+        where: {userId: req.userId}
+    });
 
     return res.json({datas});
 }
