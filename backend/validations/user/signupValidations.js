@@ -1,6 +1,7 @@
 const path = require('path');
 const {check} = require('express-validator');
-const User = require(`${path.resolve('./')}/models/user`);
+const db = require(`${path.resolve('./')}/models`);
+const User = db.user;
 
 const signupValidations = [
     check('username')

@@ -1,17 +1,16 @@
-const path = require('path');
 const express = require('express');
 const app = express();
 const cors = require('cors')
-const connectDB = require('./config/db');
 const config = require('config');
 const port = config.get('port');
 const passport = require("passport");
 const initIl8n = require('./config/il8n');
+const db = require("./models");
 const parseUserInJwtToken = require('./middlewares/parseUserInJwtToken');
 
-require('./config/authentication')();
+db.sequelize.sync();
 
-connectDB();
+require('./config/authentication')();
 
 app.use(express.json({extended: false}));
 app.use(cors());

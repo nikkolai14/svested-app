@@ -1,6 +1,7 @@
 const path = require('path');
-const User = require(`${path.resolve('./')}/models/user`);
-const Data = require(`${path.resolve('./')}/models/data`);
+const db = require(`${path.resolve('./')}/models`);
+const User = db.user;
+const Data = db.data;
 const bcrypt = require('bcrypt');
 const {validationResult} = require('express-validator');
 const config = require('config');
@@ -54,19 +55,13 @@ const processData = async (req, res) => {
     const filteredDatas = jsonDatas
         .filter(data => data.randAlphabet === 'a' || data.randAlphabet === 'b')
         .map((data) => {
-            //return {user: {id: req.userId}, randAlphabet: data.randAlphabet};
             return {userId: req.userId, randAlphabet: data.randAlphabet};
         });
-    const options = {
-        validate: true,
-        association: Data.User
-        //include: [Data.User] 
-    };
 
     let state = false;
     filteredDatas.forEach((data) => {
         try {
-            Data.create(data, options);
+            Data.create(data);
             state = true;
         } catch(error) {
             state = false;

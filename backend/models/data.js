@@ -1,18 +1,9 @@
-const { 
-    Sequelize, 
-    Model, 
-    DataTypes 
-} = require('sequelize');
-const User = require('./user');
-const sequelize = new Sequelize('sqlite::memory:');
-const Data = sequelize.define('data', {
-  randAlphabet: DataTypes.STRING(1)
-});
+module.exports = (sequelize, Sequelize, user) => {
+  const data = sequelize.define("data", {
+    randAlphabet: Sequelize.STRING(1)
+  });
 
-Data.User = Data.belongsTo(User);
+  data.belongsTo(user);
 
-(async () => {
-  await sequelize.sync();
-})();
-
-module.exports = Data;
+  return data;
+};
