@@ -8,10 +8,6 @@ const signup = (data) => {
     });
 }
 
-const verify = () => {
-    return api.post('/verify');
-}
-
 const process = () => {
     return api.post('/process');
 }
@@ -23,8 +19,7 @@ const fetch = () => {
 const userService = {
     signup,
     process,
-    fetch,
-    verify
+    fetch
 };
 
 export default userService;

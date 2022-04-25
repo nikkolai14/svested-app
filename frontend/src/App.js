@@ -1,10 +1,11 @@
 import React from "react";
-import routes from "./routes";
+import config from "./config";
+import { RouterGuard } from 'react-router-guard';
 
 function App() {
     return (
       <>
-        {routes}
+        <RouterGuard config={config} />
       </>
     );
 }
