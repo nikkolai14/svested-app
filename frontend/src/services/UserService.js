@@ -12,8 +12,8 @@ const process = () => {
     return api.post('/process');
 }
 
-const fetch = () => {
-    return api.get('/fetch');
+const fetch = (page) => {
+    return api.get(`/fetch?page=${page}`);
 }
 
 const userService = {
