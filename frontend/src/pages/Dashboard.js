@@ -6,13 +6,13 @@ import {
     Alert
 } from 'react-bootstrap';
 import UserService from '../services/UserService'
+import Grid from '../components/grid';
+import Pagination from '../components/pagination';
 
 const Dashboard = () => {
     const [datas, setDatas] = useState([]);
     const [showSuccessMsg, setShowSuccessMsg] = useState(false);
     const [noProcess, setNoProcess] = useState(false);
-    const [page, setPage] = useState(1);
-    const [paginationClicked, setPaginationClicked] = useState(false);
     
     const handleProcess = () => {
         UserService.process()
@@ -29,33 +29,16 @@ const Dashboard = () => {
             .catch(error => console.error(error))
     }
     
-    const handleFetch = () => {
+    const handleFetch = (page = 1) => {
         UserService.fetch(page)
             .then(response => {
                 if (response.data.datas.length) {
                     setNoProcess(true);
                     setDatas(response.data.datas);
-                    setPaginationClicked(false);
                 }
             })
             .catch(error => console.error(error))
     }
-
-    const handlePagination = (isPrev) => {
-        if (isPrev){
-            setPage(page - 1)
-        } else {
-            setPage(page + 1)
-        }
-
-        setPaginationClicked(true);
-    }
-
-    useEffect(() => {
-        if (page && paginationClicked) {
-            handleFetch();
-        } 
-    }, [page, handleFetch, paginationClicked])
 
     return (
         <div className="row justify-content-center align-items-center">
@@ -65,7 +48,7 @@ const Dashboard = () => {
                 <Col>
                     <div className="d-flex gap-3 justify-content-end">
                         <Button variant="success" disabled={noProcess} onClick={handleProcess}>Process</Button>
-                        <Button variant="warning" onClick={handleFetch}>Fetch</Button>
+                        <Button variant="warning" onClick={() => handleFetch()}>Fetch</Button>
                     </div>
                 </Col>
             </Row>
@@ -82,29 +65,9 @@ const Dashboard = () => {
 
             {datas.length !== 0 && 
                 <>
-                    <Row className="mt-5">
-                        {datas.map((data, index) => 
-                            <Col 
-                                md={4} 
-                                key={index}
-                                className="text-center p-5"
-                            >
-                                {data.randAlphabet.toUpperCase()}
-                            </Col>
-                        )}
-                    </Row>
+                    <Grid datas={datas} />
 
-                    <Row className="mt-3">
-                        <Col>
-                            Page {page}
-                        </Col>
-                        <Col>
-                            <div className="d-flex gap-3 justify-content-end">
-                                <Button disabled={page === 1} onClick={() => handlePagination(true)} variant="primary">Prev</Button>
-                                <Button variant="primary" onClick={() => handlePagination(false)}>Next</Button>
-                            </div>
-                        </Col>
-                    </Row>
+                    <Pagination onPageChange={(page) => handleFetch(page)} />
                 </>
             }
         </div>
