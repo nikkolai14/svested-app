@@ -24,7 +24,7 @@ function Pagination({onPageChange}) {
           onPageChange(page);
           setPaginationClicked(false);
       } 
-  }, [page, paginationClicked])
+  }, [page, onPageChange, paginationClicked])
 
   return (
     <Row className="mt-3">
