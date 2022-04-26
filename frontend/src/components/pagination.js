@@ -28,13 +28,13 @@ function Pagination({onPageChange}) {
 
   return (
     <Row className="mt-3">
-        <Col>
+        <Col data-testid="pageNumber">
             Page {page}
         </Col>
         <Col>
             <div className="d-flex gap-3 justify-content-end">
-                <Button disabled={page === 1} onClick={() => handlePagination(true)} variant="primary">Prev</Button>
-                <Button variant="primary" onClick={() => handlePagination(false)}>Next</Button>
+                <Button data-testid="prevBtn" disabled={page === 1} onClick={() => handlePagination(true)} variant="primary">Prev</Button>
+                <Button data-testid="nextBtn" variant="primary" onClick={() => handlePagination(false)}>Next</Button>
             </div>
         </Col>
     </Row>
